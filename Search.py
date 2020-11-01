@@ -13,13 +13,13 @@ data_dict = []  # list for storing data later to be written on a file
 
 
 def run():
-    # object created with app_id and app_key fetched from https://developer.edamam.com/
-    e = PyEdamam(recipes_appid='cd41d476',
-                 recipes_appkey='91fc7360ff3012549b416af21df4dfcd',
-                 food_appid='73cafc31',
-                 food_appkey='5680e3abbaa82d57b48d172f156695d1')
-    f = Edamam(nutrition_appid='0ff06c93',
-               nutrition_appkey='23a10903d1d71d94a4f0bf5ae26cebac')
+    # object created with app_id and app_key fetched from website
+    e = PyEdamam(recipes_appid='x',
+                 recipes_appkey='x',
+                 food_appid='x',
+                 food_appkey='x')
+    f = Edamam(nutrition_appid='x',
+               nutrition_appkey='x')
     print(
         ">>> MENU <<<\nChoose a method for searching\n1.Food Search\n2.Recipe Search\n3.Nutrition Analysis")
     option = input('Enter a method number: ')  # menu
