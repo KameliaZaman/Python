@@ -2,18 +2,16 @@ import csv
 from py_edamam import PyEdamam, Edamam
 
 
-def my_func(k):  # Function that returns calories for each ingredient to the sorting function
+def my_func(k):  
     return k['calories']
 
 
-field_names_food = ['label', 'category', 'quantity', 'nutrients', 'images']  # list field for food
+field_names_food = ['label', 'category', 'quantity', 'nutrients', 'images']  
 field_names_recipe = ['label', 'link', 'ingredients', 'totalTime', 'yields', 'totalNutrients', 'calories', 'totalDaily',
-                      'totalWeight', 'healthLabels', 'dietLabels', 'cautions']  # list field for recipe
-data_dict = []  # list for storing data later to be written on a file
-
+                      'totalWeight', 'healthLabels', 'dietLabels', 'cautions']  
+data_dict = []  
 
 def run():
-    # object created with app_id and app_key fetched from website
     e = PyEdamam(recipes_appid='x',
                  recipes_appkey='x',
                  food_appid='x',
@@ -22,8 +20,8 @@ def run():
                nutrition_appkey='x')
     print(
         ">>> MENU <<<\nChoose a method for searching\n1.Food Search\n2.Recipe Search\n3.Nutrition Analysis")
-    option = input('Enter a method number: ')  # menu
-    if option == '1':  # for food search
+    option = input('Enter a method number: ')  
+    if option == '1':  
         name = input('Enter a food name: ')
         foods = e.search_food(name)
         for food in foods:
@@ -39,22 +37,22 @@ def run():
             print("Data not found.")
         else:
             choice = input("Store value?(Y/N): ")
-            if choice == "Y" or choice == "y":  # Write values on a file
+            if choice == "Y" or choice == "y":  
                 with open('food.csv', 'w+') as csv_file:
                     spreadsheet = csv.DictWriter(csv_file, fieldnames=field_names_food)
                     spreadsheet.writeheader()
                     spreadsheet.writerows(data_dict)
                 print("Data stored.")
-    elif option == '2':  # for recipe search
+    elif option == '2':  
         name = input('Enter a recipe/ingredient name: ')
         health_label = input("Enter health label: ")
         diet_label = input("Enter diet label: ")
         calories = input("Enter maximum calories(in kCal): ")
         recipes = e.search_recipe(name)
         for recipe in recipes:
-            if (health_label in recipe.healthLabels) or health_label == "":  # search by health label
-                if (diet_label in recipe.dietLabels) or diet_label == "":  # search by diet label
-                    if calories == "" or (int(calories) >= int(recipe.calories)):  # search by calories
+            if (health_label in recipe.healthLabels) or health_label == "":  
+                if (diet_label in recipe.dietLabels) or diet_label == "":  
+                    if calories == "" or (int(calories) >= int(recipe.calories)):  
                         print("Name: ", recipe.label)
                         print("Link: ", recipe.url)
                         print("Ingredients: ", recipe.ingredient_names)
@@ -79,15 +77,15 @@ def run():
         if len(data_dict) == 0:
             print("Data not found.")
         else:
-            data_dict.sort(key=my_func)  # sorting the recipes in ascending order based on the calories
+            data_dict.sort(key=my_func)  
             choice = input("Store value?(Y/N): ")
-            if choice == "Y" or choice == "y":  # writing values to a file
+            if choice == "Y" or choice == "y":  
                 with open('recipe.csv', 'w+') as csv_file:
                     spreadsheet = csv.DictWriter(csv_file, fieldnames=field_names_recipe)
                     spreadsheet.writeheader()
                     spreadsheet.writerows(data_dict)
                 print("Data stored.")
-    elif option == "3":  # for nutrition analysis
+    elif option == "3":  
         items = input("Enter items for calculating nutrient value: ")
         result = f.search_nutrient(items)
         print(result)
